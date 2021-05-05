@@ -1,0 +1,108 @@
+import numpy as np
+class BirdDataset():
+    def __init__(self, data_dir='../CUB_200_2011/', attr_file='attributes'):
+        self.attr_file = attr_file
+        self.images = {}
+        self.data_dir = data_dir
+        self.img_dir = self.data_dir + 'images/'
+        self.parts = self.get_parts()
+        self.attributes = self.get_attributes()
+        self._create_img_dict()
+        self.train_indices = np.random.choice(list(self.images.keys()), size=int(len(self.images.keys())*.8), replace=False)
+        self.test_indices = list(set(list(self.images.keys())) - set(list(self.train_indices)))
+
+    
+    def _create_img_dict(self):
+        # Initialize dict of dicts, get filepaths
+        with open('../CUB_200_2011/images.txt') as f:
+            for line in f.readlines():
+                line_lst = line.split()
+                self.images[int(line_lst[0])] = {}
+                self.images[int(line_lst[0])]['filepath'] = line_lst[1]
+
+        # Get class labels for each img_id
+        with open(f'{self.data_dir}/image_class_labels.txt') as f:
+            for line in f.readlines():
+                line_lst = line.split()
+                self.images[int(line_lst[0])]['class_label'] = int(line_lst[1])
+        
+        # Get bounding_box of the bird for each img_id
+        with open(f'{self.data_dir}/bounding_boxes.txt') as f:
+            for line in f.readlines():
+                line_lst = line.split()
+                self.images[int(line_lst[0])]['bounding_box'] = [float(i) for i in line_lst[1:]]
+
+        # Get bounding_box of each part of bird for each img_id (new sub-dictionary needed)
+        with open(f'{self.data_dir}/parts/part_locs.txt') as f:
+            for line in f.readlines():
+                line_lst = line.split()
+                img_id, part_id, visible = int(line_lst[0]), int(line_lst[1]), int(line_lst[-1])
+                self.images[img_id]['parts'] = self.images[img_id].get('parts', {})
+                if visible == 1:
+                    loc = [float(i) for i in line_lst[2:4]]
+                    self.images[img_id]['parts'][self.parts[part_id]] = loc
+        # get attribute labels, with the following format: <image_id> <attribute_id> <is_present> <certainty_id> <time>
+        with open(self.data_dir+'attributes/image_attribute_labels.txt') as f:
+            # for now, i'm not considering certainty values when inserting attributes into the dictionary
+            for line in f.readlines():
+                line_lst = line.split()
+                img_id, attr_id, present = int(line_lst[0]), int(line_lst[1]), int(line_lst[2])
+                self.images[img_id]['attributes'] = self.images[img_id].get('attributes', [])
+                if present == 1:
+                    self.images[img_id]['attributes'].append(self.attributes[attr_id])
+        
+    def get_parts(self):
+        parts = {}
+        with open(self.data_dir+'parts/parts.txt') as f:
+            for line in f.readlines():
+                line_lst = line.split()
+                parts[int(line_lst[0])] = ' '.join(line_lst[1:])
+        return parts
+    
+    def get_attributes(self):
+        attributes = {}
+        with open(self.data_dir+f'attributes/{self.attr_file}.txt') as f:
+            for line in f.readlines():
+                line_lst = line.split()
+                attributes[int(line_lst[0])] = line_lst[1]
+        return attributes
+    
+    def open_image(self, img_id):
+        return Image.open(self.img_dir+self.images[img_id]['filepath'])
+    
+    def draw_bbox(self, img_id):
+        img = self.open_image(img_id)
+        fig, ax = plt.subplots()
+        ax.imshow(img)
+        
+        bbox = self.images[img_id]['bounding_box']
+        rect = patches.Rectangle(tuple(bbox[:2]), bbox[2], bbox[3], linewidth=2, edgecolor='r', facecolor='none')
+        
+        ax.add_patch(rect)
+        plt.show()
+    
+    def plot_parts_bbox(self, img_id):
+        img = self.open_image(img_id)
+        
+        fig, ax = plt.subplots()
+        ax.imshow(img)
+        
+        
+        xy = self.images[img_id]['parts'].values()
+        
+        x = [i[0] for i in xy]
+        y = [i[1] for i in xy]
+        ax.scatter(x, y)
+        
+        parts = self.images[img_id]['parts'].keys()
+        for i, txt in enumerate(parts):
+            ax.annotate(txt, (x[i], y[i]))
+            
+        bbox = self.images[img_id]['bounding_box']
+        rect = patches.Rectangle(tuple(bbox[:2]), bbox[2], bbox[3], linewidth=2, edgecolor='r', facecolor='none')
+        
+        ax.add_patch(rect)
+        plt.show()
+    
+    def get_attributes_img(self, img_id):
+        return self.images[img_id]['attributes']
