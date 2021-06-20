@@ -22,7 +22,7 @@ class Bird_Attribute_Loader(XAI_Birds_Dataset):
     def __init__(self, bd:BirdDataset, attrs, subset=True, species=False, transform=None, train=True, val=False, random_seed=42):
         XAI_Birds_Dataset.__init__(self, bd, subset=subset, transform=transform, train=train, val=val, random_seed=random_seed)
 #         print(f'num_images: {len(self.images)}')
-        self.attrs = attrs
+        self.attrs = sorted(attrs)
         self.species = species
         self.class_dict = self._set_classes_attributes()
         self.images, self.attr_indices = self._filter_images_by_attributes()
@@ -37,7 +37,7 @@ class Bird_Attribute_Loader(XAI_Birds_Dataset):
             label = self.class_dict[attr]
             sample = {'image': image, 'label':label}
         elif isinstance(self.attrs, list):
-            attrs = sorted([self.images[idx]['attributes'][i] for i in self.attr_indices[idx]])
+            attrs = [self.images[idx]['attributes'][i] for i in self.attr_indices[idx]]
 #             print(attrs)
 #             print("ATTRIBUTES TO INDEX:",attrs)
             labels = [self.class_dict[attr.split('::')[0]][attr] for attr in attrs]
@@ -45,12 +45,12 @@ class Bird_Attribute_Loader(XAI_Birds_Dataset):
 #                 print(self.species)
 #                 print(self.class_dict['species'])
 #     self.images[idx]['class_label']
-                labels.insert(0, self.images[idx]['class_label'])
+                labels.append(self.images[idx]['class_label'])
             sample = {'image': image, 'labels':labels}
         if self.transform:
             sample['image'] = self.transform(sample['image'])
         return sample
-    
+
     def _set_classes_attributes(self):
         pd_attr = pd.Series(self.bd.attributes)
         if isinstance(self.attrs, str):
@@ -63,8 +63,7 @@ class Bird_Attribute_Loader(XAI_Birds_Dataset):
                 attrs_dict[attribute] = dict(zip(attr_dict.values(), range(len(attr_dict))))
 #             print(f'ATTRS DICT: {attrs_dict}')
 #             class_dict = dict(zip(attrs_dict.values(), range(len(attrs_dict))))
-        if self.species:
-            attrs_dict['species'] = dict(zip(range(len(self.bd.species)), self.bd.species.values()))
+        if self.species: attrs_dict['species'] = dict(zip(range(len(self.bd.species)), self.bd.species.values()))
         return attrs_dict
     
     def _filter_images_by_attributes(self):

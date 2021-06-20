@@ -18,30 +18,37 @@ from bird_dataset import *
 class MultiTaskModel(nn.Module):
     """
     Creates a MTL model for the two attributes: 'has_bill_shape' and 'has_wing_color'
-    Goal: get a list of attributes and create a list of layers according to the inputs, adjust linear layer based on observed number of unique values per task (e.g. bill_shape has 9 unique values and wing_color has 15)
     """
-    def __init__(self, model, bd, ps=0.5):
+    def __init__(self, model, dataset, ps=0.5):
         super(MultiTaskModel,self).__init__()
+        
 #         num_feats = model.classifier[6].in_features
 #         features = list(model.classifier.children())[:-1]
 #         features.extend([nn.Linear(num_feats, len(train_bird_dataset.class_dict))])
 #         vgg16.classifier = nn.Sequential(*features) # Replace the model classifier
         
         self.encoder = model        #fastai function that creates an encoder given an architecture
-        
-        self.bill_shape = nn.Linear(1000, 9)    
-        self.wing_color = nn.Linear(1000, 15)
+        # print(dataset.class_dict)
+        self.dataset = dataset
+        self.fc_dict = {}
+        for key, value in self.dataset.class_dict.items():
+            setattr(self, key, nn.Linear(1000, len(value)))
+
+            # print(f'num_unique_vals in {key}: {len(value)}')
+            self.fc_dict[key] = nn.Linear(1000, len(value))
+            # self.eval(f'{key}') = nn.Linear(1000, len(value))
+        # self.fc1 = nn.Linear(1000, 9)    
+        # self.fc2 = nn.Linear(1000, 15)
 
     def forward(self,x):
 
 #         x = nn.ReLU(self.encoder(x))
         x = self.encoder(x)
         
-        species = self.species(x)
-        bill_shape = self.bill_shape(x)
-        wing_color = self.wing_color(x)
-
-        return bill_shape, wing_color
+        # bill_shape = self.fc1(x)
+        # wing_color = self.fc2(x)
+        ret_vals = tuple([self.fc_dict[key](x) for key in self.dataset.class_dict])
+        return ret_vals
     
 class MultiTaskLossWrapper(nn.Module):
     '''
@@ -56,6 +63,8 @@ class MultiTaskLossWrapper(nn.Module):
 
 #         print("PREDICTIONS:",preds[0])
 #         print("LABELS:",labels[0])
-        loss0 = nn.CrossEntropyLoss()(preds[0].reshape(1, -1), labels[0].reshape(1))
-        loss1 = nn.CrossEntropyLoss()(preds[1].reshape(1, -1), labels[1].reshape(1))
-        return loss0+loss1
+        loss = sum([nn.CrossEntropyLoss()(preds[i].reshape(1, -1), labels[i].reshape(1)) for i in range(len(preds))])
+        
+#         loss0 = nn.CrossEntropyLoss()(preds[0].reshape(1, -1), labels[0].reshape(1))
+#         loss1 = nn.CrossEntropyLoss()(preds[1].reshape(1, -1), labels[1].reshape(1))
+        return loss
