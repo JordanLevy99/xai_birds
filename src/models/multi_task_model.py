@@ -35,7 +35,7 @@ class MultiTaskModel(nn.Module):
             setattr(self, key, nn.Linear(1000, len(value)))
 
             # print(f'num_unique_vals in {key}: {len(value)}')
-            self.fc_dict[key] = nn.Linear(1000, len(value))
+            self.fc_dict[key] = getattr(self, key)
             # self.eval(f'{key}') = nn.Linear(1000, len(value))
         # self.fc1 = nn.Linear(1000, 9)    
         # self.fc2 = nn.Linear(1000, 15)
