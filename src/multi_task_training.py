@@ -45,7 +45,7 @@ class MultiTaskTraining:
         if torch.cuda.is_available(): self.model.cuda()
         print(self.device)
         self.task_str = '__'.join(list(train_set.dataset.class_dict.keys()))
-        
+
         self.trainloader = DataLoader(train_set, batch_size=self.batch_size, shuffle=shuffle)
         self.valloader = DataLoader(val_set, batch_size=self.batch_size, shuffle=shuffle)
         self.loss_func = loss_func.to(self.device)
@@ -53,7 +53,7 @@ class MultiTaskTraining:
         self.momentum = momentum
         self.early_stopping = early_stopping
         self.opt = optim.SGD(self.model.parameters(), lr=self.lr, momentum=self.momentum)
-        
+
         self.avg_train_losses = []
         self.avg_val_losses = []
         self.val_acc = []
@@ -61,8 +61,8 @@ class MultiTaskTraining:
         self.best_epoch = 0
         self.best_score_lst = []
         self.best_model = None
-    
-    
+
+
     def train(self):
         for epoch in range(self.epochs):
             self.cur_epoch = epoch
@@ -81,7 +81,7 @@ class MultiTaskTraining:
                 # Forward step.
                 outputs = self.model(inputs)
                 # print('outputs came')
-                # print("OUTPUTS:",outputs) 
+                # print("OUTPUTS:",outputs)
                 # break
                 loss = self.loss_func(outputs, labels)
                 # print(loss)
@@ -93,7 +93,7 @@ class MultiTaskTraining:
 
                 # Print statistics.
                 running_loss += loss.item()
-        #         print('running loss', running_loss)
+                # print('running loss', running_loss)
         #         print(outputs)
                 if i % self.print_freq == self.print_freq - 1: # Print every several mini-batches.
                     avg_loss = running_loss / self.print_freq
@@ -113,10 +113,13 @@ class MultiTaskTraining:
                     self.opt.zero_grad() # zero the parameter gradients
                     val_predicted = [torch.max(i, 1)[1] for i in val_outputs]
                     num_correct += sum(np.array(val_labels.cpu()).flatten()==np.array(val_predicted[0].cpu()).flatten())
+                    # print(val_labels.cpu())
+                    # print(val_predicted[0].cpu())
+                    # break
                     val_losses.append(self.loss_func(val_outputs, val_labels).item())
                 acc = num_correct/(len(data_iter)*self.batch_size*len(val_labels))
                 self.val_acc.append(acc)
-                if acc > self.best_score: 
+                if acc > self.best_score:
                     self.best_score = acc
                     self.best_model = self.model
                     self.best_epoch = epoch
@@ -129,10 +132,12 @@ class MultiTaskTraining:
                     break
                 print('Validation accuracy:',acc)
                 print('Average validation loss:',np.mean(val_losses))
+                sys.stdout.close()
+                sys.stdout = open(f"logs/{self.task_str}_{self.epochs}_logs.txt", "a")
                 self.avg_val_losses.append(np.mean(val_losses))
             self.model.train()
         print('Finished Training.')
-    
+
     def eval_model(self):
         self.model.eval()
         with torch.no_grad():
@@ -148,7 +153,7 @@ class MultiTaskTraining:
                 val_losses.append(self.loss_func(val_outputs, val_labels).item())
             acc = num_correct/(len(data_iter)*self.batch_size*len(val_labels))
         return acc
-    
+
     def plot_train_val_loss(self, f_label_size=15, f_title_size=18, f_ticks_size=11):
         plt.plot(self.avg_train_losses)
         plt.plot(self.avg_val_losses)
@@ -157,12 +162,12 @@ class MultiTaskTraining:
         plt.title('Training and Validation Loss', fontsize=f_title_size)
         plt.legend(['Training Loss', 'Validation Loss']);
         plt.savefig(f'{self.data_dir}figures/{self.task_str}_{self.best_epoch}_epoch_train_val_loss.png', dpi=800)
-    
+
     def save_model(self):
-        fpath = f'{self.data_dir}models/{self.task_str}_{self.cur_epoch}_epoch_state_dict.pth'
+        fpath = f'{self.data_dir}models/{self.task_str}_{self.best_epoch}_epoch_state_dict.pth'
         torch.save(self.model.state_dict(), fpath)
         print(f'Model saved at {fpath}')
-    
+
     def save_object(self):
         with open(f'{self.data_dir}models/training_objects/{self.task_str}_{self.cur_epoch}_obj.pkl', 'wb') as f:
             pickle.dump(self, f)
@@ -179,7 +184,7 @@ class MultiTaskTraining:
 #    model = MultiTaskModel(vgg16, train_bird_dataset)
 #    loss_func = MultiTaskLossWrapper()
 #    mtt = MultiTaskTraining(model, train_bird_dataset, val_bird_dataset, loss_func, epochs=50, lr=0.0001, patience=7)
-    
+
 #    mtt.train()
 #    mtt.plot_train_val_loss()
 #    mtt.save_model()
