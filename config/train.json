@@ -1,0 +1,9 @@
+{
+    "preload":true,
+    "attrs":["has_bill_shape", "has_breast_pattern"],
+    "species":true,
+    "epochs":250,
+    "lr":1e-2,
+    "patience":25,
+    "batch_size":10
+}

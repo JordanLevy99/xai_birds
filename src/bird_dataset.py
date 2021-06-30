@@ -1,7 +1,7 @@
 import numpy as np
 import pickle
 class BirdDataset():
-    def __init__(self, data_dir='../CUB_200_2011/', attr_file='attributes', species_file='classes.txt', save=False, save_file='images.pkl', preload=False, preload_dir='../processed_data/', preload_file='images-subset.pkl'):
+    def __init__(self, data_dir='CUB_200_2011/', attr_file='attributes', species_file='classes.txt', save=False, save_file='images.pkl', preload=False, preload_dir='processed_data/', preload_file='images.pkl'):
         self.attr_file = attr_file
         self.species_file = species_file
         self.images = {}
@@ -10,14 +10,15 @@ class BirdDataset():
         self.parts = self.get_parts()
         self.attributes = self.get_attributes()
         self.species = self._get_species_dict()
+        
         if preload:
             self.images = pickle.load(open(preload_dir+preload_file, 'rb'))
         else:
             self._create_img_dict()
             if save:
                 pickle.dump(self.images, open(preload_dir+save_file, 'wb'))
-        self.train_indices = np.random.choice(list(self.images.keys()), size=int(len(self.images.keys())*.8), replace=False)
-        self.test_indices = list(set(list(self.images.keys())) - set(list(self.train_indices)))
+#         self.train_indices = np.random.choice(list(self.images.keys()), size=int(len(self.images.keys())*.8), replace=False)
+#         self.test_indices = list(set(list(self.images.keys())) - set(list(self.train_indices)))
 
     def _get_species_dict(self):
         species_dict = {}
@@ -30,7 +31,7 @@ class BirdDataset():
         
     def _create_img_dict(self):
         # Initialize dict of dicts, get filepaths
-        with open('../CUB_200_2011/images.txt') as f:
+        with open(f'{self.data_dir}images.txt') as f:
             for line in f.readlines():
                 line_lst = line.split()
                 self.images[int(line_lst[0])] = {}
@@ -40,7 +41,7 @@ class BirdDataset():
         with open(f'{self.data_dir}/image_class_labels.txt') as f:
             for line in f.readlines():
                 line_lst = line.split()
-                self.images[int(line_lst[0])]['class_label'] = int(line_lst[1])
+                self.images[int(line_lst[0])]['class_label'] = int(line_lst[1])-1
         
         # Get bounding_box of the bird for each img_id
         with open(f'{self.data_dir}/bounding_boxes.txt') as f:
@@ -66,7 +67,9 @@ class BirdDataset():
                 self.images[img_id]['attributes'] = self.images[img_id].get('attributes', [])
                 if present == 1:
                     self.images[img_id]['attributes'].append(self.attributes[attr_id])
-
+        for i in self.images.keys():
+            self.images[i]['image_id'] = i
+            
     def get_parts(self):
         parts = {}
         with open(self.data_dir+'parts/parts.txt') as f:

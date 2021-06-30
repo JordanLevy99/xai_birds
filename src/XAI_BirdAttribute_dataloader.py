@@ -11,7 +11,7 @@ sys.path.insert(0, '../src')
 from bird_dataset import *
 from XAI_birds_dataloader import *
 
-class Bird_Attribute_Loader(XAI_Birds_Dataset):
+class Bird_Attribute_Loader(Dataset):
     '''
     Loads in x amount of attributes in bd.attributes
     self.attrs:str or list -- loads in x attributes into a list of labels for Pytorch
@@ -19,14 +19,27 @@ class Bird_Attribute_Loader(XAI_Birds_Dataset):
     
     change this class or make a new one where you can use key of image directly as an attribute...
     '''
-    def __init__(self, bd:BirdDataset, attrs, subset=True, species=False, transform=None, train=True, val=False, random_seed=42):
-        XAI_Birds_Dataset.__init__(self, bd, subset=subset, transform=transform, train=train, val=val, random_seed=random_seed)
+    def __init__(self, bd:BirdDataset, attrs, verbose, subset=False, species=False, filter_b_w=True, transform=None, random_seed=42):
+#         XAI_Birds_Dataset.__init__(self, bd, subset=subset, transform=transform, train=train, val=val, random_seed=random_seed)
+         # true and val arguments deprecated...s
 #         print(f'num_images: {len(self.images)}')
-        self.attrs = sorted(attrs)
+        self.bd = bd
+        self.attrs = attrs
+        self.verbose=verbose
+        self.transform = transform
+        self.filter_b_w = filter_b_w
+#         self.bd.images[key]['image_id'] = key
+        self.images = [self.bd.images[key] for key in self.bd.images]
+        if self.attrs is not None: self.attrs = sorted(self.attrs)
         self.species = species
         self.class_dict = self._set_classes_attributes()
-        self.images, self.attr_indices = self._filter_images_by_attributes()
-
+        if self.attrs is not None: self.images, self.attr_indices = self._filter_images_by_attributes()
+        if self.filter_b_w: self.images = self._filter_images_b_w()
+#         if self.subset: self.images = self._filter_images_by_species()
+            
+    def __len__(self):
+        return len(self.images)
+    
     def __getitem__(self, idx):
         if torch.is_tensor(idx):
             idx = idx.tolist()
@@ -47,8 +60,13 @@ class Bird_Attribute_Loader(XAI_Birds_Dataset):
 #     self.images[idx]['class_label']
                 labels.append(self.images[idx]['class_label'])
             sample = {'image': image, 'labels':labels}
+        elif self.species:
+            label = self.images[idx]['class_label']
+            sample = {'image': image, 'labels':label}
         if self.transform:
             sample['image'] = self.transform(sample['image'])
+        if self.verbose:
+            print('image_id: ', self.images[idx]['image_id'])
         return sample
 
     def _set_classes_attributes(self):
@@ -63,13 +81,27 @@ class Bird_Attribute_Loader(XAI_Birds_Dataset):
                 attrs_dict[attribute] = dict(zip(attr_dict.values(), range(len(attr_dict))))
 #             print(f'ATTRS DICT: {attrs_dict}')
 #             class_dict = dict(zip(attrs_dict.values(), range(len(attrs_dict))))
-        if self.species: attrs_dict['species'] = dict(zip(range(len(self.bd.species)), self.bd.species.values()))
+            if self.species: attrs_dict['species'] = dict(zip(range(len(self.bd.species)), self.bd.species.values()))
+        elif self.species: 
+            attrs_dict = dict()
+            attrs_dict['species'] = dict(zip(range(len(self.bd.species)), self.bd.species.values()))
         return attrs_dict
+    
+    def _filter_images_b_w(self):
+        bw_ids = [448, 1401, 3617, 3619, 3780, 5029, 5393, 6321]
+        filt_images = []
+        for img in self.images:
+            if img['image_id'] not in bw_ids: filt_images.append(img)
+        return filt_images
+#     def _filter_images_by_species(self):
+#         for i
+        
+#         return filt_images
     
     def _filter_images_by_attributes(self):
         filt_images = []
         attr_indices = []
-        for img in self.images:
+        for i, img in enumerate(self.images):
             check=0
             attr_index = []
             attrs = []

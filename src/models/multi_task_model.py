@@ -48,6 +48,8 @@ class MultiTaskModel(nn.Module):
         # bill_shape = self.fc1(x)
         # wing_color = self.fc2(x)
         ret_vals = tuple([self.fc_dict[key](x) for key in self.dataset.class_dict])
+#         if len(ret_vals) == 1:
+#             return ret_vals[0]
         return ret_vals
     
 class MultiTaskLossWrapper(nn.Module):

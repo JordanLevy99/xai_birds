@@ -11,7 +11,11 @@ sys.path.insert(0, '../src')
 from bird_dataset import *
 
 class XAI_Birds_Dataset(Dataset):
-    def __init__(self, bd:BirdDataset, subset=True, transform=None, train=True, val=False, random_seed=42):
+    '''
+    DEPRECATED, replaced by XAI_BirdAttribute_Dataloader
+    
+    '''
+    def __init__(self, bd:BirdDataset, subset=False, transform=None, train=True, val=False, random_seed=42, verbose=False):
         self.bd = bd
         self.transform = transform
         self.subset = subset
@@ -21,12 +25,12 @@ class XAI_Birds_Dataset(Dataset):
 #         if self.train: self.train_test_indices = self.bd.train_indices
 #         else: self.train_test_indices = self.bd.test_indices
         
-        if self.subset: 
+        if self.subset:
             self.class_dict = self._set_classes('classes-subset')
             self.images = self._filter_images()
         else: 
             self.class_dict = self._set_classes('classes')
-            self.images = self.bd.images
+            self.images = self._filter_images()
 #         self.images = self.load_images()
         
 #         if self.imag
@@ -41,6 +45,7 @@ class XAI_Birds_Dataset(Dataset):
 #             print(train_indices)
             img_pd = pd.Series(dict(zip(range(len(self.images)), self.images)))
             self.images = img_pd.loc[list(set(range(len(self.images))) - set(train_indices))].tolist()
+            self.ids = [i['image_id'] for i in self.images]
     def __len__(self):
         return len(self.images)
     
@@ -61,12 +66,12 @@ class XAI_Birds_Dataset(Dataset):
             sample['image'] = self.transform(sample['image'])
             sample['label'] = torch.LongTensor([sample['label']])
         return sample
+    
     def _set_classes(self, fname):
         '''
         For now keeping this in the 'master' XAI_Birds_Dataset class, could move this to its own 'species classification' class that inherits this class
         '''
-        
-        with open(f'../CUB_200_2011/{fname}.txt') as f:
+        with open(f'{self.bd.data_dir}{fname}.txt') as f:
             class_dict = {int(line.split(' ')[0]):i for i, line in enumerate(f.readlines())}
         return class_dict
     
