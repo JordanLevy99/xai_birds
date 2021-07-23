@@ -19,10 +19,10 @@ from captum.attr import visualization as viz
 
 # sys.path.insert(0, '../src')
 from bird_dataset import *
-from XAI_birds_dataloader import *
+# from XAI_birds_dataloader import *
 from tqdm import tqdm
 from models.multi_task_model import *
-from XAI_birds_dataloader import *
+# from XAI_birds_dataloader import *
 from XAI_BirdAttribute_dataloader import *
 import pickle
 
@@ -35,6 +35,8 @@ class MultiTaskTraining:
     def __init__(self, model, train_set, val_set, loss_func, data_dir='', batch_size=1, shuffle=True, lr=0.001, momentum=0.9, early_stopping=True, patience=7, epochs=50, print_freq=100):
         self.model = model
         self.train_set = train_set
+        self.val_set = val_set
+        self.num_tasks = self.train_set.dataset.num_tasks
         self.batch_size = batch_size
         self.epochs = epochs
         self.cur_epoch = 0
@@ -44,10 +46,11 @@ class MultiTaskTraining:
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         if torch.cuda.is_available(): self.model.cuda()
         print(self.device)
-        self.task_str = '__'.join(list(train_set.dataset.class_dict.keys()))
-
-        self.trainloader = DataLoader(train_set, batch_size=self.batch_size, shuffle=shuffle)
-        self.valloader = DataLoader(val_set, batch_size=self.batch_size, shuffle=shuffle)
+        self.label_dict = dict(zip(self.train_set.dataset.class_dict.keys(), range(len(self.train_set.dataset.class_dict.keys()))))
+        self.task_str = '__'.join(list(self.train_set.dataset.class_dict.keys()))
+        print(self.task_str)
+        self.trainloader = DataLoader(self.train_set, batch_size=self.batch_size, shuffle=shuffle)
+        self.valloader = DataLoader(self.val_set, batch_size=self.batch_size, shuffle=shuffle)
         self.loss_func = loss_func.to(self.device)
         self.lr = lr
         self.momentum = momentum
@@ -60,17 +63,18 @@ class MultiTaskTraining:
         self.best_score = 0
         self.best_epoch = 0
         self.best_score_lst = []
-        self.best_model = None
+        self.best_model = model
 
 
     def train(self):
+        sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_logs.txt", "w")
         for epoch in range(self.epochs):
             self.cur_epoch = epoch
             running_loss = 0.0
             for i, data in tqdm(enumerate(self.trainloader, 0)):
                 # Get the inputs.
-        #         print("LABELS:",data['labels'])
-                inputs, labels = data['image'], torch.LongTensor(data['labels'])
+#                 print("LABELS:",data['labels'])
+                inputs, labels = data['image'], data['labels']
 
                 # Move the inputs to the specified device.
                 inputs, labels = inputs.to(self.device), labels.to(self.device)
@@ -100,24 +104,61 @@ class MultiTaskTraining:
                     print('[epoch: {}, i: {:5d}] avg mini-batch loss: {:.3f}'.format(
                         epoch, i, avg_loss))
                     running_loss = 0.0
+                    sys.stdout.close()
+                    sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_logs.txt", "a")
 
             self.avg_train_losses.append(avg_loss)
             self.model.eval()
             with torch.no_grad():
-                num_correct=0
+                num_correct = 0
+                k = 3
+                # Check several images.
+
+                dataiter = iter(self.valloader)
+                batch_size = 1
+                corr_dict = dict(zip(range(len(self.val_set.dataset.class_dict)), np.zeros(len(self.val_set.dataset.class_dict))))
                 val_losses = []
-                data_iter = iter(self.valloader)
-                for val_data in tqdm(data_iter):
-                    val_inputs, val_labels = val_data['image'].cuda(), torch.LongTensor(val_data['labels']).cuda()
-                    val_outputs = self.model(val_inputs)
-                    self.opt.zero_grad() # zero the parameter gradients
+                for i in tqdm(range(len(dataiter))):
+                    sample = dataiter.next()
+                    val_inputs, val_labels = sample['image'].cuda(), torch.LongTensor(sample['labels']).cuda()
+                    val_outputs = self.model(val_inputs.to(self.device))
                     val_predicted = [torch.max(i, 1)[1] for i in val_outputs]
-                    num_correct += sum(np.array(val_labels.cpu()).flatten()==np.array(val_predicted[0].cpu()).flatten())
-                    # print(val_labels.cpu())
-                    # print(val_predicted[0].cpu())
-                    # break
+
                     val_losses.append(self.loss_func(val_outputs, val_labels).item())
-                acc = num_correct/(len(data_iter)*self.batch_size*len(val_labels))
+
+                    val_labels = np.array(val_labels.cpu()).reshape(len(self.val_set.dataset.class_dict), -1)
+                    corr_vals = np.where(np.array(val_labels)==np.array(val_predicted))
+                    idx_corr = corr_vals[0]
+
+                    for j in idx_corr:
+                        corr_dict[j] += 1
+
+#                     if i % 100 == 0:
+#                         print("iteration",i)
+                pd_corr = pd.Series(corr_dict)
+                pd_corr.index = self.label_dict.keys()
+                print(f'Validation scores for epoch {self.cur_epoch}')
+                print(pd_corr / len(dataiter))
+                acc = sum(pd_corr) / (len(dataiter) * self.num_tasks)
+                print('Validation accuracy:',acc)
+                avg_validation_loss = np.mean(val_losses)
+                print(f'Avg Val Loss for epoch {self.cur_epoch}:', avg_validation_loss)
+                self.avg_val_losses.append(avg_validation_loss)
+
+#                 num_correct=0
+#                 val_losses = []
+#                 data_iter = iter(self.valloader)
+#                 for val_data in tqdm(data_iter):
+#                     val_inputs, val_labels = val_data['image'].cuda(), torch.LongTensor(val_data['labels']).cuda()
+#                     val_outputs = self.model(val_inputs)
+#                     self.opt.zero_grad() # zero the parameter gradients
+#                     val_predicted = [torch.max(i, 1)[1] for i in val_outputs]
+#                     num_correct += sum(np.array(val_labels.cpu()).flatten()==np.array(val_predicted[0].cpu()).flatten())
+#                     # print(val_labels.cpu())
+#                     # print(val_predicted[0].cpu())
+#                     # break
+#                     val_losses.append(self.loss_func(val_outputs, val_labels).item())
+#                 acc = num_correct/(len(data_iter)*self.batch_size*len(val_labels))
                 self.val_acc.append(acc)
                 if acc > self.best_score:
                     self.best_score = acc
@@ -125,18 +166,24 @@ class MultiTaskTraining:
                     self.best_epoch = epoch
                 self.best_score_lst.append(self.best_score)
                 if epoch > self.patience and pd.Series(self.best_score_lst[-self.patience:]).nunique() == 1:
+                    print('Validation accuracy:',acc)
+                    print('Average validation loss:',np.mean(val_losses))
                     print(f'Early Stopping at Epoch {epoch} with Validation Accuracy: {self.best_score}')
                     self.model = self.best_model
                     #epoch += (self.epochs-epoch) # finishes the outer loop
                     self.epochs = epoch
                     break
-                print('Validation accuracy:',acc)
-                print('Average validation loss:',np.mean(val_losses))
+#                 print('Validation accuracy:',acc)
+#                 print('Average validation loss:',np.mean(val_losses))
                 sys.stdout.close()
-                sys.stdout = open(f"logs/{self.task_str}_{self.epochs}_logs.txt", "a")
+                sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_logs.txt", "a")
+#                 test_str = '_test' if self.test == True else ''
                 self.avg_val_losses.append(np.mean(val_losses))
             self.model.train()
-        print('Finished Training.')
+            if epoch % 10 == 0:
+                fpath = f'{self.data_dir}models/tmp__{self.task_str}_{self.epochs}_epoch_state_dict.pth'
+                torch.save(self.best_model.state_dict(), fpath)
+                print(f'Model saved at {fpath}')
 
     def eval_model(self):
         self.model.eval()
@@ -169,7 +216,7 @@ class MultiTaskTraining:
         print(f'Model saved at {fpath}')
 
     def save_object(self):
-        with open(f'{self.data_dir}models/training_objects/{self.task_str}_{self.cur_epoch}_obj.pkl', 'wb') as f:
+        with open(f'{self.data_dir}models/training_objects/{self.task_str}_{self.best_epoch}_obj.pkl', 'wb') as f:
             pickle.dump(self, f)
 
 #if __name__ == '__main__':

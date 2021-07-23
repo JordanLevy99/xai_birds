@@ -47,26 +47,32 @@ class MultiTaskModel(nn.Module):
         
         # bill_shape = self.fc1(x)
         # wing_color = self.fc2(x)
-        ret_vals = tuple([self.fc_dict[key](x) for key in self.dataset.class_dict])
+        ret_vals = [self.fc_dict[key](x) for key in self.dataset.class_dict]
 #         if len(ret_vals) == 1:
 #             return ret_vals[0]
-        return ret_vals
+        return np.array(ret_vals)
     
 class MultiTaskLossWrapper(nn.Module):
     '''
     Multi-Task loss for two attributes only
     '''
-    def __init__(self):
+    def __init__(self, dataset):
         super(MultiTaskLossWrapper, self).__init__()
 #         self.task_num = task_num
 #         self.log_vars = nn.Parameter(torch.zeros((task_num)))
-
+        self.dataset = dataset
     def forward(self, preds, labels):
 
-#         print("PREDICTIONS:",preds[0])
-#         print("LABELS:",labels[0])
-        loss = sum([nn.CrossEntropyLoss()(preds[i].reshape(1, -1), labels[i].reshape(1)) for i in range(len(preds))])
-        
+#         print("PREDICTIONS:",preds)
+#         print("LABELS:",labels)
+# #         print(labels)
+#         print(labels[0].shape)
+#         print(preds[0].shape)
+        labels = labels.reshape(len(self.dataset.class_dict),-1)
+        loss = sum([nn.CrossEntropyLoss()(preds[i], labels[i]) for i in range(len(preds))])
+
+        #         loss = sum([nn.CrossEntropyLoss()(preds[i].reshape(1, -1), labels[i].reshape(len(self.dataset.class_dict))) for i in range(len(preds))])
+
 #         loss0 = nn.CrossEntropyLoss()(preds[0].reshape(1, -1), labels[0].reshape(1))
 #         loss1 = nn.CrossEntropyLoss()(preds[1].reshape(1, -1), labels[1].reshape(1))
         return loss

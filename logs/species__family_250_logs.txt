@@ -1,0 +1,95 @@
+98it [00:04, 27.03it/s][epoch: 0, i:    99] avg mini-batch loss: 8.929
+199it [00:08, 27.59it/s][epoch: 0, i:   199] avg mini-batch loss: 8.549
+298it [00:11, 23.59it/s][epoch: 0, i:   299] avg mini-batch loss: 8.324
+398it [00:15, 27.17it/s][epoch: 0, i:   399] avg mini-batch loss: 8.220
+498it [00:19, 25.31it/s][epoch: 0, i:   499] avg mini-batch loss: 8.134
+598it [00:23, 29.03it/s][epoch: 0, i:   599] avg mini-batch loss: 7.695
+699it [00:27, 26.29it/s][epoch: 0, i:   699] avg mini-batch loss: 7.705
+798it [00:31, 26.67it/s][epoch: 0, i:   799] avg mini-batch loss: 7.765
+899it [00:35, 26.54it/s][epoch: 0, i:   899] avg mini-batch loss: 7.153
+997it [00:38, 28.71it/s][epoch: 0, i:   999] avg mini-batch loss: 6.885
+1099it [00:42, 27.92it/s][epoch: 0, i:  1099] avg mini-batch loss: 6.913
+1198it [00:46, 26.58it/s][epoch: 0, i:  1199] avg mini-batch loss: 7.085
+1297it [00:49, 29.15it/s][epoch: 0, i:  1299] avg mini-batch loss: 6.511
+1397it [00:53, 25.91it/s][epoch: 0, i:  1399] avg mini-batch loss: 6.652
+1499it [00:57, 28.44it/s][epoch: 0, i:  1499] avg mini-batch loss: 6.149
+1598it [01:00, 26.10it/s][epoch: 0, i:  1599] avg mini-batch loss: 6.176
+1698it [01:04, 28.72it/s][epoch: 0, i:  1699] avg mini-batch loss: 6.629
+1798it [01:08, 29.02it/s][epoch: 0, i:  1799] avg mini-batch loss: 5.527
+1897it [01:11, 29.03it/s][epoch: 0, i:  1899] avg mini-batch loss: 6.229
+1998it [01:15, 26.87it/s][epoch: 0, i:  1999] avg mini-batch loss: 6.028
+2099it [01:18, 29.37it/s][epoch: 0, i:  2099] avg mini-batch loss: 6.095
+2199it [01:22, 28.62it/s][epoch: 0, i:  2199] avg mini-batch loss: 5.713
+2299it [01:25, 28.17it/s][epoch: 0, i:  2299] avg mini-batch loss: 5.133
+2398it [01:29, 26.23it/s][epoch: 0, i:  2399] avg mini-batch loss: 5.836
+2497it [01:33, 25.50it/s][epoch: 0, i:  2499] avg mini-batch loss: 5.490
+2599it [01:36, 28.03it/s][epoch: 0, i:  2599] avg mini-batch loss: 5.237
+2699it [01:40, 28.21it/s][epoch: 0, i:  2699] avg mini-batch loss: 5.294
+2798it [01:43, 28.31it/s][epoch: 0, i:  2799] avg mini-batch loss: 5.296
+2897it [01:47, 25.80it/s][epoch: 0, i:  2899] avg mini-batch loss: 4.770
+2997it [01:50, 29.35it/s][epoch: 0, i:  2999] avg mini-batch loss: 5.368
+3098it [01:54, 28.64it/s][epoch: 0, i:  3099] avg mini-batch loss: 4.532
+3198it [01:58, 29.33it/s][epoch: 0, i:  3199] avg mini-batch loss: 4.555
+3298it [02:01, 29.28it/s][epoch: 0, i:  3299] avg mini-batch loss: 4.759
+3399it [02:05, 27.82it/s][epoch: 0, i:  3399] avg mini-batch loss: 4.723
+3497it [02:08, 28.96it/s][epoch: 0, i:  3499] avg mini-batch loss: 4.594
+3599it [02:12, 26.95it/s][epoch: 0, i:  3599] avg mini-batch loss: 4.615
+3698it [02:15, 28.08it/s][epoch: 0, i:  3699] avg mini-batch loss: 4.518
+3798it [02:19, 29.03it/s][epoch: 0, i:  3799] avg mini-batch loss: 4.382
+3898it [02:23, 28.67it/s][epoch: 0, i:  3899] avg mini-batch loss: 4.708
+3998it [02:26, 28.05it/s][epoch: 0, i:  3999] avg mini-batch loss: 3.759
+4098it [02:30, 28.44it/s][epoch: 0, i:  4099] avg mini-batch loss: 4.593
+4198it [02:33, 24.60it/s][epoch: 0, i:  4199] avg mini-batch loss: 4.640
+4299it [02:37, 29.47it/s][epoch: 0, i:  4299] avg mini-batch loss: 4.534
+4397it [02:40, 28.64it/s][epoch: 0, i:  4399] avg mini-batch loss: 4.786
+4497it [02:44, 29.30it/s][epoch: 0, i:  4499] avg mini-batch loss: 3.798
+4597it [02:47, 25.52it/s][epoch: 0, i:  4599] avg mini-batch loss: 4.353
+4699it [02:51, 28.14it/s][epoch: 0, i:  4699] avg mini-batch loss: 3.631
+4797it [02:54, 26.43it/s][epoch: 0, i:  4799] avg mini-batch loss: 4.517
+4897it [02:58, 28.87it/s][epoch: 0, i:  4899] avg mini-batch loss: 4.256
+4997it [03:01, 28.32it/s][epoch: 0, i:  4999] avg mini-batch loss: 3.791
+5099it [03:05, 28.70it/s][epoch: 0, i:  5099] avg mini-batch loss: 3.882
+5199it [03:09, 26.15it/s][epoch: 0, i:  5199] avg mini-batch loss: 4.132
+5297it [03:12, 28.92it/s][epoch: 0, i:  5299] avg mini-batch loss: 3.903
+5397it [03:16, 29.51it/s][epoch: 0, i:  5399] avg mini-batch loss: 4.342
+5497it [03:19, 29.60it/s][epoch: 0, i:  5499] avg mini-batch loss: 3.817
+5598it [03:23, 28.07it/s][epoch: 0, i:  5599] avg mini-batch loss: 4.048
+5697it [03:26, 25.37it/s][epoch: 0, i:  5699] avg mini-batch loss: 3.837
+5799it [03:30, 28.99it/s][epoch: 0, i:  5799] avg mini-batch loss: 4.169
+5899it [03:33, 27.58it/s][epoch: 0, i:  5899] avg mini-batch loss: 4.085
+5997it [03:37, 28.74it/s][epoch: 0, i:  5999] avg mini-batch loss: 3.974
+6099it [03:40, 29.62it/s][epoch: 0, i:  6099] avg mini-batch loss: 4.084
+6199it [03:44, 29.65it/s][epoch: 0, i:  6199] avg mini-batch loss: 3.923
+6299it [03:47, 28.45it/s][epoch: 0, i:  6299] avg mini-batch loss: 3.898
+6399it [03:51, 29.46it/s][epoch: 0, i:  6399] avg mini-batch loss: 3.769
+6498it [03:54, 29.21it/s][epoch: 0, i:  6499] avg mini-batch loss: 3.836
+6598it [03:58, 28.50it/s][epoch: 0, i:  6599] avg mini-batch loss: 3.602
+6698it [04:02, 25.68it/s][epoch: 0, i:  6699] avg mini-batch loss: 3.673
+6798it [04:05, 29.01it/s][epoch: 0, i:  6799] avg mini-batch loss: 3.902
+6896it [04:09, 29.05it/s][epoch: 0, i:  6899] avg mini-batch loss: 4.123
+6997it [04:12, 29.17it/s][epoch: 0, i:  6999] avg mini-batch loss: 3.176
+7098it [04:16, 29.02it/s][epoch: 0, i:  7099] avg mini-batch loss: 4.256
+7199it [04:19, 29.01it/s][epoch: 0, i:  7199] avg mini-batch loss: 3.295
+7298it [04:23, 28.45it/s][epoch: 0, i:  7299] avg mini-batch loss: 3.370
+7399it [04:27, 25.77it/s][epoch: 0, i:  7399] avg mini-batch loss: 3.590
+7499it [04:31, 28.21it/s][epoch: 0, i:  7499] avg mini-batch loss: 3.826
+7598it [04:34, 25.58it/s][epoch: 0, i:  7599] avg mini-batch loss: 3.321
+7698it [04:38, 28.63it/s][epoch: 0, i:  7699] avg mini-batch loss: 3.462
+7797it [04:41, 28.20it/s][epoch: 0, i:  7799] avg mini-batch loss: 3.524
+
+[epoch: 1, i:    99] avg mini-batch loss: 2.637
+[epoch: 1, i:   199] avg mini-batch loss: 2.471
+[epoch: 1, i:   299] avg mini-batch loss: 2.636
+[epoch: 1, i:   399] avg mini-batch loss: 2.257
+[epoch: 1, i:   499] avg mini-batch loss: 2.326
+[epoch: 1, i:   599] avg mini-batch loss: 2.884
+[epoch: 1, i:   699] avg mini-batch loss: 2.517
+[epoch: 1, i:   799] avg mini-batch loss: 2.764
+[epoch: 1, i:   899] avg mini-batch loss: 2.709
+[epoch: 1, i:   999] avg mini-batch loss: 2.572
+[epoch: 1, i:  1099] avg mini-batch loss: 2.522
+[epoch: 1, i:  1199] avg mini-batch loss: 2.567
+[epoch: 1, i:  1299] avg mini-batch loss: 2.100
+[epoch: 1, i:  1399] avg mini-batch loss: 2.475
+[epoch: 1, i:  1499] avg mini-batch loss: 2.413
+[epoch: 1, i:  1599] avg mini-batch loss: 2.566

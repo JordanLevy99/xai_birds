@@ -1,5 +1,7 @@
 import numpy as np
 import pickle
+import pandas as pd
+import os
 class BirdDataset():
     def __init__(self, data_dir='CUB_200_2011/', attr_file='attributes', species_file='classes.txt', save=False, save_file='images.pkl', preload=False, preload_dir='processed_data/', preload_file='images.pkl'):
         self.attr_file = attr_file
@@ -10,6 +12,7 @@ class BirdDataset():
         self.parts = self.get_parts()
         self.attributes = self.get_attributes()
         self.species = self._get_species_dict()
+        self.bird_to_fam, self.fam = self._get_family_dict()
         
         if preload:
             self.images = pickle.load(open(preload_dir+preload_file, 'rb'))
@@ -26,8 +29,15 @@ class BirdDataset():
             for line in f.readlines():
                 line_lst = line.split()
                 line_lst[1] = line_lst[1].split('.')[-1]
-                species_dict[int(line_lst[0])-1] = line_lst[1]
+                species_dict[int(line_lst[0])] = line_lst[1]
         return species_dict
+    
+    def _get_family_dict(self):
+        bird_names = pd.Series([i.split('_')[-1] for i in os.listdir(self.data_dir+'images')]).value_counts()
+        bird_families = bird_names[bird_names > 1]
+        bird_fam_dict = {i.split('.')[1]: i.split('_')[-1] for i in os.listdir(self.data_dir+'images')}
+        fam_dict = dict(zip(bird_families.index, range(len(bird_families))))
+        return bird_fam_dict, fam_dict
         
     def _create_img_dict(self):
         # Initialize dict of dicts, get filepaths
@@ -36,13 +46,19 @@ class BirdDataset():
                 line_lst = line.split()
                 self.images[int(line_lst[0])] = {}
                 self.images[int(line_lst[0])]['filepath'] = line_lst[1]
+                self.images[int(line_lst[0])]['species_name'] = line_lst[1].split('.')[1].split('/')[0]
 
         # Get class labels for each img_id
-        with open(f'{self.data_dir}/image_class_labels.txt') as f:
-            for line in f.readlines():
-                line_lst = line.split()
-                self.images[int(line_lst[0])]['class_label'] = int(line_lst[1])-1
-        
+#         with open(f'{self.data_dir}/image_class_labels.txt') as f:
+#             for line in f.readlines():
+#                 line_lst = line.split()
+#                 self.images[int(line_lst[0])]['class_label'] = int(line_lst[1])-1
+        rev_species_dict = {val: key for key, val in self.species.items()}
+        for i in self.images.keys():
+            try:self.images[i]['class_label'] = rev_species_dict[self.images[i]['species_name']]
+            except KeyError:
+                continue
+    
         # Get bounding_box of the bird for each img_id
         with open(f'{self.data_dir}/bounding_boxes.txt') as f:
             for line in f.readlines():
