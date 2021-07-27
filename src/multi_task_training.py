@@ -61,8 +61,10 @@ class MultiTaskTraining:
         self.avg_val_losses = []
         self.val_acc = []
         self.best_score = 0
+        self.best_loss = 10e10
         self.best_epoch = 0
         self.best_score_lst = []
+        self.best_loss_lst = []
         self.best_model = model
 
 
@@ -135,15 +137,7 @@ class MultiTaskTraining:
 
 #                     if i % 100 == 0:
 #                         print("iteration",i)
-                pd_corr = pd.Series(corr_dict)
-                pd_corr.index = self.label_dict.keys()
-                print(f'Validation scores for epoch {self.cur_epoch}')
-                print(pd_corr / len(dataiter))
-                acc = sum(pd_corr) / (len(dataiter) * self.num_tasks)
-                print('Validation accuracy:',acc)
-                avg_validation_loss = np.mean(val_losses)
-                print(f'Avg Val Loss for epoch {self.cur_epoch}:', avg_validation_loss)
-                self.avg_val_losses.append(avg_validation_loss)
+
 
 #                 num_correct=0
 #                 val_losses = []
@@ -160,15 +154,33 @@ class MultiTaskTraining:
 #                     val_losses.append(self.loss_func(val_outputs, val_labels).item())
 #                 acc = num_correct/(len(data_iter)*self.batch_size*len(val_labels))
                 self.val_acc.append(acc)
+                avg_validation_loss = np.mean(val_losses)
+                # Track and Log Best Validation Accuracy, Loss
                 if acc > self.best_score:
-                    self.best_score = acc
+                    # self.best_score = acc
+                    best_str_acc = 'BEST '
+                if avg_validation_loss < self.best_loss:
+                    self.best_loss = avg_validation_loss
                     self.best_model = self.model
                     self.best_epoch = epoch
+                    self.best_score = acc
+                    best_str_loss = 'BEST '
+                pd_corr = pd.Series(corr_dict)
+                pd_corr.index = self.label_dict.keys()
+                print(f'Validation scores for epoch {self.cur_epoch}')
+                print(pd_corr / len(dataiter))
+                acc = sum(pd_corr) / (len(dataiter) * self.num_tasks)
+                print(f'{best_str_acc}Validation accuracy:',acc)
+                print(f'{best_str_loss} Avg Val Loss for epoch {self.cur_epoch}:', avg_validation_loss)
+                self.avg_val_losses.append(avg_validation_loss)
+                best_str_acc = ''
+                best_str_loss = ''
                 self.best_score_lst.append(self.best_score)
-                if epoch > self.patience and pd.Series(self.best_score_lst[-self.patience:]).nunique() == 1:
-                    print('Validation accuracy:',acc)
-                    print('Average validation loss:',np.mean(val_losses))
-                    print(f'Early Stopping at Epoch {epoch} with Validation Accuracy: {self.best_score}')
+                self.best_loss_lst.append(self.best_loss)
+
+                # Early Stopping Code
+                if epoch > self.patience and pd.Series(self.best_loss_lst[-self.patience:]).nunique() == 1:
+                    print(f'Early Stopping at Epoch {epoch} with BEST Validation Loss: {self.best_loss} and Validation Accuracy: {self.best_score}')
                     self.model = self.best_model
                     #epoch += (self.epochs-epoch) # finishes the outer loop
                     self.epochs = epoch
@@ -211,7 +223,8 @@ class MultiTaskTraining:
         plt.savefig(f'{self.data_dir}figures/{self.task_str}_{self.best_epoch}_epoch_train_val_loss.png', dpi=800)
 
     def save_model(self):
-        fpath = f'{self.data_dir}models/{self.task_str}_{self.best_epoch}_epoch_state_dict.pth'
+        # create models and training_objects folders on first run of run.py
+        fpath = f'{self.data_dir}models/{self.task_str}_{self.best_epoch}_epoch_{self.lr}_lr_state_dict.pth'
         torch.save(self.model.state_dict(), fpath)
         print(f'Model saved at {fpath}')
 
