@@ -1,0 +1,390 @@
+[epoch: 0, i:   299] avg mini-batch loss: 11.721
+[epoch: 0, i:   599] avg mini-batch loss: 11.155
+[epoch: 0, i:   899] avg mini-batch loss: 10.975
+[epoch: 0, i:  1199] avg mini-batch loss: 11.005
+[epoch: 0, i:  1499] avg mini-batch loss: 10.913
+[epoch: 0, i:  1799] avg mini-batch loss: 10.735
+[epoch: 0, i:  2099] avg mini-batch loss: 10.639
+[epoch: 0, i:  2399] avg mini-batch loss: 10.602
+[epoch: 0, i:  2699] avg mini-batch loss: 10.563
+[epoch: 0, i:  2999] avg mini-batch loss: 10.307
+[epoch: 0, i:  3299] avg mini-batch loss: 10.474
+[epoch: 0, i:  3599] avg mini-batch loss: 10.253
+[epoch: 0, i:  3899] avg mini-batch loss: 10.140
+[epoch: 0, i:  4199] avg mini-batch loss: 9.719
+[epoch: 0, i:  4499] avg mini-batch loss: 9.937
+[epoch: 0, i:  4799] avg mini-batch loss: 9.662
+[epoch: 0, i:  5099] avg mini-batch loss: 9.613
+[epoch: 0, i:  5399] avg mini-batch loss: 9.498
+[epoch: 0, i:  5699] avg mini-batch loss: 9.435
+[epoch: 0, i:  5999] avg mini-batch loss: 9.046
+[epoch: 0, i:  6299] avg mini-batch loss: 9.105
+[epoch: 0, i:  6599] avg mini-batch loss: 8.995
+[epoch: 0, i:  6899] avg mini-batch loss: 8.843
+Validation scores for epoch 0
+has_bill_shape        0.556876
+has_breast_pattern    0.726655
+species               0.057159
+family                0.617431
+dtype: float64
+Validation accuracy: 0.48953027730616866
+Avg Val Loss for epoch 0: 9.352338418760878
+Model saved at models/tmp__has_bill_shape__has_breast_pattern__species__family_165_epoch_state_dict.pth
+[epoch: 1, i:   299] avg mini-batch loss: 8.044
+[epoch: 1, i:   599] avg mini-batch loss: 7.940
+[epoch: 1, i:   899] avg mini-batch loss: 7.898
+[epoch: 1, i:  1199] avg mini-batch loss: 7.602
+[epoch: 1, i:  1499] avg mini-batch loss: 7.812
+[epoch: 1, i:  1799] avg mini-batch loss: 7.414
+[epoch: 1, i:  2099] avg mini-batch loss: 7.111
+[epoch: 1, i:  2399] avg mini-batch loss: 7.193
+[epoch: 1, i:  2699] avg mini-batch loss: 7.296
+[epoch: 1, i:  2999] avg mini-batch loss: 6.770
+[epoch: 1, i:  3299] avg mini-batch loss: 6.851
+[epoch: 1, i:  3599] avg mini-batch loss: 6.901
+[epoch: 1, i:  3899] avg mini-batch loss: 6.598
+[epoch: 1, i:  4199] avg mini-batch loss: 6.355
+[epoch: 1, i:  4499] avg mini-batch loss: 6.687
+[epoch: 1, i:  4799] avg mini-batch loss: 6.576
+[epoch: 1, i:  5099] avg mini-batch loss: 6.282
+[epoch: 1, i:  5399] avg mini-batch loss: 6.481
+[epoch: 1, i:  5699] avg mini-batch loss: 6.165
+[epoch: 1, i:  5999] avg mini-batch loss: 6.168
+[epoch: 1, i:  6299] avg mini-batch loss: 6.021
+[epoch: 1, i:  6599] avg mini-batch loss: 6.055
+[epoch: 1, i:  6899] avg mini-batch loss: 6.077
+Validation scores for epoch 1
+has_bill_shape        0.571024
+has_breast_pattern    0.748161
+species               0.217317
+family                0.766836
+dtype: float64
+Validation accuracy: 0.5758347481607244
+Avg Val Loss for epoch 1: 7.214744565172524
+[epoch: 2, i:   299] avg mini-batch loss: 4.915
+[epoch: 2, i:   599] avg mini-batch loss: 4.617
+[epoch: 2, i:   899] avg mini-batch loss: 4.833
+[epoch: 2, i:  1199] avg mini-batch loss: 4.745
+[epoch: 2, i:  1499] avg mini-batch loss: 4.634
+[epoch: 2, i:  1799] avg mini-batch loss: 4.572
+[epoch: 2, i:  2099] avg mini-batch loss: 4.588
+[epoch: 2, i:  2399] avg mini-batch loss: 4.612
+[epoch: 2, i:  2699] avg mini-batch loss: 4.569
+[epoch: 2, i:  2999] avg mini-batch loss: 4.431
+[epoch: 2, i:  3299] avg mini-batch loss: 4.560
+[epoch: 2, i:  3599] avg mini-batch loss: 4.348
+[epoch: 2, i:  3899] avg mini-batch loss: 4.387
+[epoch: 2, i:  4199] avg mini-batch loss: 4.177
+[epoch: 2, i:  4499] avg mini-batch loss: 4.184
+[epoch: 2, i:  4799] avg mini-batch loss: 4.496
+[epoch: 2, i:  5099] avg mini-batch loss: 4.350
+[epoch: 2, i:  5399] avg mini-batch loss: 4.596
+[epoch: 2, i:  5699] avg mini-batch loss: 4.255
+[epoch: 2, i:  5999] avg mini-batch loss: 4.214
+[epoch: 2, i:  6299] avg mini-batch loss: 4.432
+[epoch: 2, i:  6599] avg mini-batch loss: 4.440
+[epoch: 2, i:  6899] avg mini-batch loss: 4.189
+Validation scores for epoch 2
+has_bill_shape        0.596491
+has_breast_pattern    0.773062
+species               0.311828
+family                0.759479
+dtype: float64
+Validation accuracy: 0.6102150537634409
+Avg Val Loss for epoch 2: 6.997774978242624
+[epoch: 3, i:   299] avg mini-batch loss: 3.367
+[epoch: 3, i:   599] avg mini-batch loss: 3.248
+[epoch: 3, i:   899] avg mini-batch loss: 3.282
+[epoch: 3, i:  1199] avg mini-batch loss: 3.305
+[epoch: 3, i:  1499] avg mini-batch loss: 3.134
+[epoch: 3, i:  1799] avg mini-batch loss: 3.296
+[epoch: 3, i:  2099] avg mini-batch loss: 3.011
+[epoch: 3, i:  2399] avg mini-batch loss: 3.030
+[epoch: 3, i:  2699] avg mini-batch loss: 3.152
+[epoch: 3, i:  2999] avg mini-batch loss: 3.044
+[epoch: 3, i:  3299] avg mini-batch loss: 3.225
+[epoch: 3, i:  3599] avg mini-batch loss: 3.068
+[epoch: 3, i:  3899] avg mini-batch loss: 3.053
+[epoch: 3, i:  4199] avg mini-batch loss: 3.040
+[epoch: 3, i:  4499] avg mini-batch loss: 3.230
+[epoch: 3, i:  4799] avg mini-batch loss: 3.138
+[epoch: 3, i:  5099] avg mini-batch loss: 3.067
+[epoch: 3, i:  5399] avg mini-batch loss: 3.149
+[epoch: 3, i:  5699] avg mini-batch loss: 3.283
+[epoch: 3, i:  5999] avg mini-batch loss: 2.742
+[epoch: 3, i:  6299] avg mini-batch loss: 3.243
+[epoch: 3, i:  6599] avg mini-batch loss: 3.033
+[epoch: 3, i:  6899] avg mini-batch loss: 2.688
+Validation scores for epoch 3
+has_bill_shape        0.602716
+has_breast_pattern    0.696661
+species               0.376910
+family                0.791171
+dtype: float64
+Validation accuracy: 0.6168647425014149
+Avg Val Loss for epoch 3: 6.783969056086818
+[epoch: 4, i:   299] avg mini-batch loss: 2.024
+[epoch: 4, i:   599] avg mini-batch loss: 2.054
+[epoch: 4, i:   899] avg mini-batch loss: 2.086
+[epoch: 4, i:  1199] avg mini-batch loss: 2.194
+[epoch: 4, i:  1499] avg mini-batch loss: 2.081
+[epoch: 4, i:  1799] avg mini-batch loss: 2.267
+[epoch: 4, i:  2099] avg mini-batch loss: 2.114
+[epoch: 4, i:  2399] avg mini-batch loss: 2.333
+[epoch: 4, i:  2699] avg mini-batch loss: 2.303
+[epoch: 4, i:  2999] avg mini-batch loss: 2.329
+[epoch: 4, i:  3299] avg mini-batch loss: 2.192
+[epoch: 4, i:  3599] avg mini-batch loss: 2.389
+[epoch: 4, i:  3899] avg mini-batch loss: 2.401
+[epoch: 4, i:  4199] avg mini-batch loss: 2.232
+[epoch: 4, i:  4499] avg mini-batch loss: 2.110
+[epoch: 4, i:  4799] avg mini-batch loss: 2.192
+[epoch: 4, i:  5099] avg mini-batch loss: 2.352
+[epoch: 4, i:  5399] avg mini-batch loss: 2.180
+[epoch: 4, i:  5699] avg mini-batch loss: 2.267
+[epoch: 4, i:  5999] avg mini-batch loss: 2.195
+[epoch: 4, i:  6299] avg mini-batch loss: 2.391
+[epoch: 4, i:  6599] avg mini-batch loss: 2.427
+[epoch: 4, i:  6899] avg mini-batch loss: 2.368
+Validation scores for epoch 4
+has_bill_shape        0.554046
+has_breast_pattern    0.724958
+species               0.365025
+family                0.818336
+dtype: float64
+Validation accuracy: 0.6155913978494624
+Avg Val Loss for epoch 4: 7.692927860107271
+[epoch: 5, i:   299] avg mini-batch loss: 1.599
+[epoch: 5, i:   599] avg mini-batch loss: 1.360
+[epoch: 5, i:   899] avg mini-batch loss: 1.395
+[epoch: 5, i:  1199] avg mini-batch loss: 1.578
+[epoch: 5, i:  1499] avg mini-batch loss: 1.563
+[epoch: 5, i:  1799] avg mini-batch loss: 1.445
+[epoch: 5, i:  2099] avg mini-batch loss: 1.488
+[epoch: 5, i:  2399] avg mini-batch loss: 1.633
+[epoch: 5, i:  2699] avg mini-batch loss: 1.595
+[epoch: 5, i:  2999] avg mini-batch loss: 1.674
+[epoch: 5, i:  3299] avg mini-batch loss: 1.472
+[epoch: 5, i:  3599] avg mini-batch loss: 1.659
+[epoch: 5, i:  3899] avg mini-batch loss: 1.609
+[epoch: 5, i:  4199] avg mini-batch loss: 1.678
+[epoch: 5, i:  4499] avg mini-batch loss: 1.634
+[epoch: 5, i:  4799] avg mini-batch loss: 1.463
+[epoch: 5, i:  5099] avg mini-batch loss: 1.607
+[epoch: 5, i:  5399] avg mini-batch loss: 1.651
+[epoch: 5, i:  5699] avg mini-batch loss: 1.527
+[epoch: 5, i:  5999] avg mini-batch loss: 1.631
+[epoch: 5, i:  6299] avg mini-batch loss: 1.516
+[epoch: 5, i:  6599] avg mini-batch loss: 1.814
+[epoch: 5, i:  6899] avg mini-batch loss: 1.583
+Validation scores for epoch 5
+has_bill_shape        0.587436
+has_breast_pattern    0.670062
+species               0.368987
+family                0.741370
+dtype: float64
+Validation accuracy: 0.5919637804187889
+Avg Val Loss for epoch 5: 9.075109065101858
+[epoch: 6, i:   299] avg mini-batch loss: 1.103
+[epoch: 6, i:   599] avg mini-batch loss: 1.055
+[epoch: 6, i:   899] avg mini-batch loss: 1.084
+[epoch: 6, i:  1199] avg mini-batch loss: 0.991
+[epoch: 6, i:  1499] avg mini-batch loss: 1.054
+[epoch: 6, i:  1799] avg mini-batch loss: 0.951
+[epoch: 6, i:  2099] avg mini-batch loss: 1.030
+[epoch: 6, i:  2399] avg mini-batch loss: 1.055
+[epoch: 6, i:  2699] avg mini-batch loss: 1.050
+[epoch: 6, i:  2999] avg mini-batch loss: 0.942
+[epoch: 6, i:  3299] avg mini-batch loss: 0.997
+[epoch: 6, i:  3599] avg mini-batch loss: 0.977
+[epoch: 6, i:  3899] avg mini-batch loss: 1.080
+[epoch: 6, i:  4199] avg mini-batch loss: 1.037
+[epoch: 6, i:  4499] avg mini-batch loss: 1.057
+[epoch: 6, i:  4799] avg mini-batch loss: 1.061
+[epoch: 6, i:  5099] avg mini-batch loss: 1.114
+[epoch: 6, i:  5399] avg mini-batch loss: 0.973
+[epoch: 6, i:  5699] avg mini-batch loss: 1.173
+[epoch: 6, i:  5999] avg mini-batch loss: 1.019
+[epoch: 6, i:  6299] avg mini-batch loss: 0.994
+[epoch: 6, i:  6599] avg mini-batch loss: 0.873
+[epoch: 6, i:  6899] avg mini-batch loss: 1.207
+Validation scores for epoch 6
+has_bill_shape        0.544426
+has_breast_pattern    0.743067
+species               0.348048
+family                0.767402
+dtype: float64
+Validation accuracy: 0.6007357102433503
+Avg Val Loss for epoch 6: 10.137179249919736
+[epoch: 7, i:   299] avg mini-batch loss: 0.775
+[epoch: 7, i:   599] avg mini-batch loss: 0.727
+[epoch: 7, i:   899] avg mini-batch loss: 0.632
+[epoch: 7, i:  1199] avg mini-batch loss: 0.752
+[epoch: 7, i:  1499] avg mini-batch loss: 0.767
+[epoch: 7, i:  1799] avg mini-batch loss: 0.669
+[epoch: 7, i:  2099] avg mini-batch loss: 0.675
+[epoch: 7, i:  2399] avg mini-batch loss: 0.646
+[epoch: 7, i:  2699] avg mini-batch loss: 0.659
+[epoch: 7, i:  2999] avg mini-batch loss: 0.733
+[epoch: 7, i:  3299] avg mini-batch loss: 0.742
+[epoch: 7, i:  3599] avg mini-batch loss: 0.805
+[epoch: 7, i:  3899] avg mini-batch loss: 0.689
+[epoch: 7, i:  4199] avg mini-batch loss: 0.741
+[epoch: 7, i:  4499] avg mini-batch loss: 0.834
+[epoch: 7, i:  4799] avg mini-batch loss: 0.745
+[epoch: 7, i:  5099] avg mini-batch loss: 0.842
+[epoch: 7, i:  5399] avg mini-batch loss: 0.666
+[epoch: 7, i:  5699] avg mini-batch loss: 0.679
+[epoch: 7, i:  5999] avg mini-batch loss: 0.785
+[epoch: 7, i:  6299] avg mini-batch loss: 0.743
+[epoch: 7, i:  6599] avg mini-batch loss: 0.819
+[epoch: 7, i:  6899] avg mini-batch loss: 0.833
+Validation scores for epoch 7
+has_bill_shape        0.500283
+has_breast_pattern    0.717035
+species               0.370685
+family                0.767402
+dtype: float64
+Validation accuracy: 0.5888511601584606
+Avg Val Loss for epoch 7: 11.224655913021447
+[epoch: 8, i:   299] avg mini-batch loss: 0.457
+[epoch: 8, i:   599] avg mini-batch loss: 0.513
+[epoch: 8, i:   899] avg mini-batch loss: 0.527
+[epoch: 8, i:  1199] avg mini-batch loss: 0.560
+[epoch: 8, i:  1499] avg mini-batch loss: 0.446
+[epoch: 8, i:  1799] avg mini-batch loss: 0.436
+[epoch: 8, i:  2099] avg mini-batch loss: 0.485
+[epoch: 8, i:  2399] avg mini-batch loss: 0.493
+[epoch: 8, i:  2699] avg mini-batch loss: 0.507
+[epoch: 8, i:  2999] avg mini-batch loss: 0.478
+[epoch: 8, i:  3299] avg mini-batch loss: 0.543
+[epoch: 8, i:  3599] avg mini-batch loss: 0.595
+[epoch: 8, i:  3899] avg mini-batch loss: 0.502
+[epoch: 8, i:  4199] avg mini-batch loss: 0.637
+[epoch: 8, i:  4499] avg mini-batch loss: 0.541
+[epoch: 8, i:  4799] avg mini-batch loss: 0.548
+[epoch: 8, i:  5099] avg mini-batch loss: 0.513
+[epoch: 8, i:  5399] avg mini-batch loss: 0.505
+[epoch: 8, i:  5699] avg mini-batch loss: 0.458
+[epoch: 8, i:  5999] avg mini-batch loss: 0.526
+[epoch: 8, i:  6299] avg mini-batch loss: 0.432
+[epoch: 8, i:  6599] avg mini-batch loss: 0.453
+[epoch: 8, i:  6899] avg mini-batch loss: 0.624
+Validation scores for epoch 8
+has_bill_shape        0.537068
+has_breast_pattern    0.683079
+species               0.361064
+family                0.744199
+dtype: float64
+Validation accuracy: 0.5813525749858517
+Avg Val Loss for epoch 8: 11.758092009387045
+[epoch: 9, i:   299] avg mini-batch loss: 0.297
+[epoch: 9, i:   599] avg mini-batch loss: 0.448
+[epoch: 9, i:   899] avg mini-batch loss: 0.321
+[epoch: 9, i:  1199] avg mini-batch loss: 0.307
+[epoch: 9, i:  1499] avg mini-batch loss: 0.299
+[epoch: 9, i:  1799] avg mini-batch loss: 0.403
+[epoch: 9, i:  2099] avg mini-batch loss: 0.351
+[epoch: 9, i:  2399] avg mini-batch loss: 0.477
+[epoch: 9, i:  2699] avg mini-batch loss: 0.324
+[epoch: 9, i:  2999] avg mini-batch loss: 0.344
+[epoch: 9, i:  3299] avg mini-batch loss: 0.391
+[epoch: 9, i:  3599] avg mini-batch loss: 0.363
+[epoch: 9, i:  3899] avg mini-batch loss: 0.362
+[epoch: 9, i:  4199] avg mini-batch loss: 0.338
+[epoch: 9, i:  4499] avg mini-batch loss: 0.346
+[epoch: 9, i:  4799] avg mini-batch loss: 0.321
+[epoch: 9, i:  5099] avg mini-batch loss: 0.397
+[epoch: 9, i:  5399] avg mini-batch loss: 0.391
+[epoch: 9, i:  5699] avg mini-batch loss: 0.339
+[epoch: 9, i:  5999] avg mini-batch loss: 0.397
+[epoch: 9, i:  6299] avg mini-batch loss: 0.363
+[epoch: 9, i:  6599] avg mini-batch loss: 0.441
+[epoch: 9, i:  6899] avg mini-batch loss: 0.416
+Validation scores for epoch 9
+has_bill_shape        0.531409
+has_breast_pattern    0.728353
+species               0.397284
+family                0.793435
+dtype: float64
+Validation accuracy: 0.6126202603282399
+Avg Val Loss for epoch 9: 11.97898086090849
+[epoch: 10, i:   299] avg mini-batch loss: 0.275
+[epoch: 10, i:   599] avg mini-batch loss: 0.300
+[epoch: 10, i:   899] avg mini-batch loss: 0.256
+[epoch: 10, i:  1199] avg mini-batch loss: 0.320
+[epoch: 10, i:  1499] avg mini-batch loss: 0.338
+[epoch: 10, i:  1799] avg mini-batch loss: 0.382
+[epoch: 10, i:  2099] avg mini-batch loss: 0.386
+[epoch: 10, i:  2399] avg mini-batch loss: 0.288
+[epoch: 10, i:  2699] avg mini-batch loss: 0.324
+[epoch: 10, i:  2999] avg mini-batch loss: 0.330
+[epoch: 10, i:  3299] avg mini-batch loss: 0.289
+[epoch: 10, i:  3599] avg mini-batch loss: 0.261
+[epoch: 10, i:  3899] avg mini-batch loss: 0.360
+[epoch: 10, i:  4199] avg mini-batch loss: 0.361
+[epoch: 10, i:  4499] avg mini-batch loss: 0.330
+[epoch: 10, i:  4799] avg mini-batch loss: 0.287
+[epoch: 10, i:  5099] avg mini-batch loss: 0.342
+[epoch: 10, i:  5399] avg mini-batch loss: 0.287
+[epoch: 10, i:  5699] avg mini-batch loss: 0.264
+[epoch: 10, i:  5999] avg mini-batch loss: 0.278
+[epoch: 10, i:  6299] avg mini-batch loss: 0.384
+[epoch: 10, i:  6599] avg mini-batch loss: 0.344
+[epoch: 10, i:  6899] avg mini-batch loss: 0.305
+Validation scores for epoch 10
+has_bill_shape        0.528580
+has_breast_pattern    0.696095
+species               0.375212
+family                0.764573
+dtype: float64
+Validation accuracy: 0.5911148839841539
+Avg Val Loss for epoch 10: 13.681195609638364
+Model saved at models/tmp__has_bill_shape__has_breast_pattern__species__family_165_epoch_state_dict.pth
+[epoch: 11, i:   299] avg mini-batch loss: 0.288
+[epoch: 11, i:   599] avg mini-batch loss: 0.199
+[epoch: 11, i:   899] avg mini-batch loss: 0.178
+[epoch: 11, i:  1199] avg mini-batch loss: 0.233
+[epoch: 11, i:  1499] avg mini-batch loss: 0.240
+[epoch: 11, i:  1799] avg mini-batch loss: 0.189
+[epoch: 11, i:  2099] avg mini-batch loss: 0.240
+[epoch: 11, i:  2399] avg mini-batch loss: 0.245
+[epoch: 11, i:  2699] avg mini-batch loss: 0.235
+[epoch: 11, i:  2999] avg mini-batch loss: 0.239
+[epoch: 11, i:  3299] avg mini-batch loss: 0.212
+[epoch: 11, i:  3599] avg mini-batch loss: 0.291
+[epoch: 11, i:  3899] avg mini-batch loss: 0.235
+[epoch: 11, i:  4199] avg mini-batch loss: 0.303
+[epoch: 11, i:  4499] avg mini-batch loss: 0.266
+[epoch: 11, i:  4799] avg mini-batch loss: 0.217
+[epoch: 11, i:  5099] avg mini-batch loss: 0.226
+[epoch: 11, i:  5399] avg mini-batch loss: 0.333
+[epoch: 11, i:  5699] avg mini-batch loss: 0.269
+[epoch: 11, i:  5999] avg mini-batch loss: 0.281
+[epoch: 11, i:  6299] avg mini-batch loss: 0.225
+[epoch: 11, i:  6599] avg mini-batch loss: 0.188
+[epoch: 11, i:  6899] avg mini-batch loss: 0.242
+Validation scores for epoch 11
+has_bill_shape        0.554612
+has_breast_pattern    0.657046
+species               0.402377
+family                0.753254
+dtype: float64
+Validation accuracy: 0.5918222976796831
+Avg Val Loss for epoch 11: 14.063672530394728
+[epoch: 12, i:   299] avg mini-batch loss: 0.234
+[epoch: 12, i:   599] avg mini-batch loss: 0.173
+[epoch: 12, i:   899] avg mini-batch loss: 0.268
+[epoch: 12, i:  1199] avg mini-batch loss: 0.224
+[epoch: 12, i:  1499] avg mini-batch loss: 0.168
+[epoch: 12, i:  1799] avg mini-batch loss: 0.244
+[epoch: 12, i:  2099] avg mini-batch loss: 0.183
+[epoch: 12, i:  2399] avg mini-batch loss: 0.289
+[epoch: 12, i:  2699] avg mini-batch loss: 0.213
+[epoch: 12, i:  2999] avg mini-batch loss: 0.179
+[epoch: 12, i:  3299] avg mini-batch loss: 0.194
+[epoch: 12, i:  3599] avg mini-batch loss: 0.181
+[epoch: 12, i:  3899] avg mini-batch loss: 0.244
+[epoch: 12, i:  4199] avg mini-batch loss: 0.198
+[epoch: 12, i:  4499] avg mini-batch loss: 0.170
+[epoch: 12, i:  4799] avg mini-batch loss: 0.225
