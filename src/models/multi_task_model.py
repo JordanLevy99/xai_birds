@@ -1,4 +1,4 @@
-'''With inspiration from https://towardsdatascience.com/multi-task-learning-with-pytorch-and-fastai-6d10dc7ce855'''
+'''With inspiration from https://towardsdatascience.com/multi-task-learning-with-pytorch-and-fastai-6d10dc7ce855 and https://towardsdatascience.com/tuning-a-multi-task-fate-grand-order-trained-pytorch-network-152cfda2e086'''
 
 import torch
 import os
@@ -9,6 +9,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils, models
 import sys
 import torch.nn as nn
+import torch.nn.functional as F
 
 
 sys.path.insert(0, '../src')
@@ -29,25 +30,44 @@ class MultiTaskModel(nn.Module):
         
         self.encoder = model        #fastai function that creates an encoder given an architecture
         # print(dataset.class_dict)
+        self.fc1 = nn.Linear(1000, 512)
+        nn.init.xavier_normal_(self.fc1.weight)
+
+        self.fc2 = nn.Linear(512, 256)
+        nn.init.xavier_normal_(self.fc2.weight)
+        # self.bn2 = nn.BatchNorm1d(256)
+        self.fc3 = nn.Linear(256, 256)
+        # self.bn3 = nn.BatchNorm1d(256)
+        self.dropout = nn.Dropout(0.25)
+
         self.dataset = dataset
         self.fc_dict = {}
         for key, value in self.dataset.class_dict.items():
-            setattr(self, key, nn.Linear(1000, len(value)))
+            setattr(self, key, nn.Linear(256, len(value)))
+        #     setattr(self, key, nn.Linear(1000, len(value)))
 
             # print(f'num_unique_vals in {key}: {len(value)}')
             self.fc_dict[key] = getattr(self, key)
+            nn.init.xavier_normal_(getattr(self, key).weight)
+
             # self.eval(f'{key}') = nn.Linear(1000, len(value))
-        # self.fc1 = nn.Linear(1000, 9)    
+        # self.fc1 = nn.Linear(1000, 9)
         # self.fc2 = nn.Linear(1000, 15)
 
     def forward(self,x):
 
 #         x = nn.ReLU(self.encoder(x))
         x = self.encoder(x)
-        
+        # print(x.shape)
+        x = self.dropout(F.relu(self.fc1(x)))
+        # print(x.shape)
+        x = self.dropout(F.relu(self.fc2(x)))
+        # print(x.shape)
+        x = self.dropout(F.relu(self.fc3(x)))
+        # print(x.shape)
         # bill_shape = self.fc1(x)
         # wing_color = self.fc2(x)
-        ret_vals = [self.fc_dict[key](x) for key in self.dataset.class_dict]
+        ret_vals = [F.softmax(self.fc_dict[key](x), dim=1) for key in self.dataset.class_dict]
 #         if len(ret_vals) == 1:
 #             return ret_vals[0]
         return np.array(ret_vals)
