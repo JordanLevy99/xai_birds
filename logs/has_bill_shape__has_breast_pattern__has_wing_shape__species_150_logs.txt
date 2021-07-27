@@ -1,0 +1,2 @@
+Error in training process, going to save model/object now
+Model saved at models/has_bill_shape__has_breast_pattern__has_wing_shape__species_0_epoch_state_dict.pth

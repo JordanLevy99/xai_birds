@@ -1,0 +1,136 @@
+[epoch: 1, i:    99] avg mini-batch loss: 0.520
+[epoch: 1, i:   199] avg mini-batch loss: 0.591
+Validation accuracy: 0.6333333333333333
+Average validation loss: 1.0987977625899172
+[epoch: 2, i:    99] avg mini-batch loss: 0.236
+[epoch: 2, i:   199] avg mini-batch loss: 0.160
+Validation accuracy: 0.7
+Average validation loss: 1.1760065295684528
+[epoch: 3, i:    99] avg mini-batch loss: 0.029
+[epoch: 3, i:   199] avg mini-batch loss: 0.154
+Validation accuracy: 0.7166666666666667
+Average validation loss: 0.8339642768713512
+[epoch: 4, i:    99] avg mini-batch loss: 0.008
+[epoch: 4, i:   199] avg mini-batch loss: 0.013
+Validation accuracy: 0.7166666666666667
+Average validation loss: 1.1267782741215948
+[epoch: 5, i:    99] avg mini-batch loss: 0.005
+[epoch: 5, i:   199] avg mini-batch loss: 0.004
+Validation accuracy: 0.6833333333333333
+Average validation loss: 1.0804782897000904
+[epoch: 6, i:    99] avg mini-batch loss: 0.003
+[epoch: 6, i:   199] avg mini-batch loss: 0.004
+Validation accuracy: 0.7
+Average validation loss: 1.4275731128038123
+[epoch: 7, i:    99] avg mini-batch loss: 0.092
+Traceback (most recent call last):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3441, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "<ipython-input-8-1779c5b99abd>", line 1, in <module>
+    mtt.train()
+  File "../src/multi_task_training.py", line 95, in train
+    running_loss += loss.item()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2061, in showtraceback
+    stb = value._render_traceback_()
+AttributeError: 'KeyboardInterrupt' object has no attribute '_render_traceback_'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 1101, in get_records
+    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 248, in wrapped
+    return f(*args, **kwargs)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 281, in _fixed_getinnerframes
+    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 1502, in getinnerframes
+    frameinfo = (tb.tb_frame,) + getframeinfo(tb, context)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 1460, in getframeinfo
+    filename = getsourcefile(frame) or getfile(frame)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 696, in getsourcefile
+    if getattr(getmodule(object, filename), '__loader__', None) is not None:
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 739, in getmodule
+    f = getabsfile(module)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 708, in getabsfile
+    _filename = getsourcefile(object) or getfile(object)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 693, in getsourcefile
+    if os.path.exists(filename):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/genericpath.py", line 19, in exists
+    os.stat(path)
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3441, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "<ipython-input-8-1779c5b99abd>", line 1, in <module>
+    mtt.train()
+  File "../src/multi_task_training.py", line 95, in train
+    running_loss += loss.item()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2061, in showtraceback
+    stb = value._render_traceback_()
+AttributeError: 'KeyboardInterrupt' object has no attribute '_render_traceback_'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3361, in run_ast_nodes
+    if (await self.run_code(code, result,  async_=asy)):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3458, in run_code
+    self.showtraceback(running_compiled_code=True)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2064, in showtraceback
+    value, tb, tb_offset=tb_offset)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 1368, in structured_traceback
+    self, etype, value, tb, tb_offset, number_of_lines_of_context)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 1268, in structured_traceback
+    self, etype, value, tb, tb_offset, number_of_lines_of_context
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 1125, in structured_traceback
+    tb_offset)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 1082, in format_exception_as_a_whole
+    last_unique, recursion_repeat = find_recursion(orig_etype, evalue, records)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 382, in find_recursion
+    return len(records), 0
+TypeError: object of type 'NoneType' has no len()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2061, in showtraceback
+    stb = value._render_traceback_()
+AttributeError: 'TypeError' object has no attribute '_render_traceback_'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 1101, in get_records
+    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 248, in wrapped
+    return f(*args, **kwargs)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/site-packages/IPython/core/ultratb.py", line 281, in _fixed_getinnerframes
+    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 1502, in getinnerframes
+    frameinfo = (tb.tb_frame,) + getframeinfo(tb, context)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 1460, in getframeinfo
+    filename = getsourcefile(frame) or getfile(frame)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 696, in getsourcefile
+    if getattr(getmodule(object, filename), '__loader__', None) is not None:
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 739, in getmodule
+    f = getabsfile(module)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 708, in getabsfile
+    _filename = getsourcefile(object) or getfile(object)
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/inspect.py", line 693, in getsourcefile
+    if os.path.exists(filename):
+  File "/datasets/home/41/641/jdlevy/.conda/envs/torchgeo/lib/python3.7/genericpath.py", line 19, in exists
+    os.stat(path)
+KeyboardInterrupt
+cuda:0
+species__family
+ERROR! Session/line number was not unique in database. History logging moved to new session 523

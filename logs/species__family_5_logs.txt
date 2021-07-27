@@ -1,0 +1,51 @@
+[epoch: 1, i:    99] avg mini-batch loss: 0.658
+[epoch: 1, i:   199] avg mini-batch loss: 0.472
+Validation accuracy: 0.7166666666666667
+Average validation loss: 1.2045785268147786
+[epoch: 2, i:    99] avg mini-batch loss: 0.190
+[epoch: 2, i:   199] avg mini-batch loss: 0.204
+Validation accuracy: 0.7333333333333333
+Average validation loss: 1.1912078817685445
+[epoch: 3, i:    99] avg mini-batch loss: 0.011
+[epoch: 3, i:   199] avg mini-batch loss: 0.019
+Validation accuracy: 0.7833333333333333
+Average validation loss: 1.025773294766744
+[epoch: 4, i:    99] avg mini-batch loss: 0.012
+[epoch: 4, i:   199] avg mini-batch loss: 0.007
+Validation accuracy: 0.7333333333333333
+Average validation loss: 1.195293092727661
+Finished Training.
+Model saved at models/species__family_3_epoch_state_dict.pth
+[epoch: 1, i:    99] avg mini-batch loss: 0.571
+[epoch: 1, i:   199] avg mini-batch loss: 0.595
+iteration 0
+Validation scores for epoch 1
+species    0.633333
+family     0.883333
+dtype: float64
+Validation accuracy: 0.7583333333333333
+[epoch: 2, i:    99] avg mini-batch loss: 0.198
+[epoch: 2, i:   199] avg mini-batch loss: 0.075
+iteration 0
+Validation scores for epoch 2
+species    0.666667
+family     0.950000
+dtype: float64
+Validation accuracy: 0.8083333333333333
+[epoch: 3, i:    99] avg mini-batch loss: 0.067
+[epoch: 3, i:   199] avg mini-batch loss: 0.256
+iteration 0
+Validation scores for epoch 3
+species    0.70
+family     0.95
+dtype: float64
+Validation accuracy: 0.825
+[epoch: 4, i:    99] avg mini-batch loss: 0.022
+[epoch: 4, i:   199] avg mini-batch loss: 0.034
+iteration 0
+Validation scores for epoch 4
+species    0.750000
+family     0.966667
+dtype: float64
+Validation accuracy: 0.8583333333333333
+Finished Training.
