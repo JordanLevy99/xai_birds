@@ -30,13 +30,13 @@ def train():
     mtt = MultiTaskTraining(model, train_bird_dataset, val_bird_dataset, loss_func, epochs=jsonread['epochs'], lr=jsonread['lr'], patience=jsonread['patience'], batch_size=jsonread['batch_size'], print_freq=jsonread['print_freq'])
     if os.path.exists('logs') != True: os.mkdir('logs')
     #sys.stdout = open(f"logs/{mtt.task_str}_{mtt.epochs}_logs.txt", "w")
-    #try:
-    mtt.train()
-    #except:
-    #    print('Error in training process, going to save model/object now')
+    try:
+        mtt.train()
+    except KeyboardInterrupt:
+       print('Ctrl+C Pressed, going to save model/object now')
     mtt.save_model()
     mtt.save_object()
-#     mtt.plot_train_val_loss()
+    mtt.plot_train_val_loss()
 
 #     sys.stdout.close()
 
