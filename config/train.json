@@ -1,0 +1,13 @@
+{
+    "preload":true,
+    "preload_file":"images-families.pkl",
+    "species_file":"classes-families.txt",
+    "attrs":null,
+    "species":true,
+    "epochs":155,
+    "lr":1e-4,
+    "patience":25,
+    "batch_size":1,
+    "print_freq":300,
+    "test":false
+}
