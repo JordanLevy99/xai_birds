@@ -16,6 +16,7 @@ from captum.attr import GuidedGradCam
 from PIL import Image
 from matplotlib.colors import LinearSegmentedColormap
 from captum.attr import visualization as viz
+import copy
 
 # sys.path.insert(0, '../src')
 from bird_dataset import *
@@ -37,6 +38,8 @@ class MultiTaskTraining:
         self.train_set = train_set
         self.val_set = val_set
         self.num_tasks = self.train_set.dataset.num_tasks
+        print("NUM TASKS: ", self.num_tasks)
+
         self.batch_size = batch_size
         self.epochs = epochs
         self.cur_epoch = 0
@@ -65,7 +68,7 @@ class MultiTaskTraining:
         self.best_epoch = 0
         self.best_score_lst = []
         self.best_loss_lst = []
-        self.best_model = model
+        self.best_model = copy.deepcopy(model)
 
 
     def train(self):
@@ -122,18 +125,35 @@ class MultiTaskTraining:
                 val_losses = []
                 for i in tqdm(range(len(dataiter))):
                     sample = dataiter.next()
+                    
+
+
+
                     val_inputs, val_labels = sample['image'].cuda(), torch.LongTensor(sample['labels']).cuda()
                     val_outputs = self.model(val_inputs.to(self.device))
-                    val_predicted = [torch.max(i, 1)[1] for i in val_outputs]
+                    val_predicted = np.array([int(torch.max(i, 1)[1].cpu()) for i in val_outputs])
+                    val_losses.append(mtt.loss_func(val_outputs, val_labels).item())
 
-                    val_losses.append(self.loss_func(val_outputs, val_labels).item())
-
-                    val_labels = np.array(val_labels.cpu()).reshape(len(self.val_set.dataset.class_dict), -1)
-                    corr_vals = np.where(np.array(val_labels)==np.array(val_predicted))
+                    val_labels = np.array(val_labels.cpu()).flatten()#.reshape(len(mtt.val_set.dataset.class_dict), -1)
+                    corr_vals = np.where(val_labels==val_predicted)
                     idx_corr = corr_vals[0]
 
                     for j in idx_corr:
                         corr_dict[j] += 1
+                    
+                    
+#                     val_inputs, val_labels = sample['image'].cuda(), torch.LongTensor(sample['labels']).cuda()
+#                     val_outputs = self.model(val_inputs.to(self.device))
+#                     val_predicted = [torch.max(i, 1)[1] for i in val_outputs]
+
+#                     val_losses.append(self.loss_func(val_outputs, val_labels).item())
+
+#                     val_labels = np.array(val_labels.cpu()).reshape(len(self.val_set.dataset.class_dict), -1)
+#                     corr_vals = np.where(np.array(val_labels)==np.array(val_predicted))
+#                     idx_corr = corr_vals[0]
+
+#                     for j in idx_corr:
+#                         corr_dict[j] += 1
 
 #                     if i % 100 == 0:
 #                         print("iteration",i)
@@ -153,26 +173,29 @@ class MultiTaskTraining:
 #                     # break
 #                     val_losses.append(self.loss_func(val_outputs, val_labels).item())
 #                 acc = num_correct/(len(data_iter)*self.batch_size*len(val_labels))
-                self.val_acc.append(acc)
                 avg_validation_loss = np.mean(val_losses)
+                pd_corr = pd.Series(corr_dict)
+                pd_corr.index = self.label_dict.keys()
+                acc = sum(pd_corr) / (len(dataiter) * self.num_tasks)
+                print(pd_corr / len(dataiter))
+
                 # Track and Log Best Validation Accuracy, Loss
                 if acc > self.best_score:
                     # self.best_score = acc
                     best_str_acc = 'BEST '
                 if avg_validation_loss < self.best_loss:
                     self.best_loss = avg_validation_loss
-                    self.best_model = self.model
+                    self.best_model = copy.deepcopy(self.model)
                     self.best_epoch = epoch
                     self.best_score = acc
                     best_str_loss = 'BEST '
-                pd_corr = pd.Series(corr_dict)
-                pd_corr.index = self.label_dict.keys()
+
                 print(f'Validation scores for epoch {self.cur_epoch}')
-                print(pd_corr / len(dataiter))
-                acc = sum(pd_corr) / (len(dataiter) * self.num_tasks)
                 print(f'{best_str_acc}Validation accuracy:',acc)
-                print(f'{best_str_loss} Avg Val Loss for epoch {self.cur_epoch}:', avg_validation_loss)
+                print(f'{best_str_loss}Avg Val Loss for epoch {self.cur_epoch}:', avg_validation_loss)
                 self.avg_val_losses.append(avg_validation_loss)
+                self.val_acc.append(acc)
+
                 best_str_acc = ''
                 best_str_loss = ''
                 self.best_score_lst.append(self.best_score)
@@ -190,7 +213,7 @@ class MultiTaskTraining:
                 sys.stdout.close()
                 sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_logs.txt", "a")
 #                 test_str = '_test' if self.test == True else ''
-                self.avg_val_losses.append(np.mean(val_losses))
+                # self.avg_val_losses.append(np.mean(val_losses))
             self.model.train()
             if epoch % 10 == 0:
                 fpath = f'{self.data_dir}models/tmp__{self.task_str}_{self.epochs}_epoch_state_dict.pth'

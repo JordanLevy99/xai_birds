@@ -54,7 +54,7 @@ class MultiTaskModel(nn.Module):
         # self.fc1 = nn.Linear(1000, 9)
         # self.fc2 = nn.Linear(1000, 15)
 
-    def forward(self,x):
+    def forward(self,x, target=None):
 
 #         x = nn.ReLU(self.encoder(x))
         x = self.encoder(x)
@@ -63,13 +63,18 @@ class MultiTaskModel(nn.Module):
         # print(x.shape)
         x = self.dropout(F.relu(self.fc2(x)))
         # print(x.shape)
-        x = self.dropout(F.relu(self.fc3(x)))
+        x = F.relu(self.fc3(x))
         # print(x.shape)
         # bill_shape = self.fc1(x)
         # wing_color = self.fc2(x)
         ret_vals = [F.softmax(self.fc_dict[key](x), dim=1) for key in self.dataset.class_dict]
 #         if len(ret_vals) == 1:
 #             return ret_vals[0]
+        if target is not None: 
+            print(f'outpt: {ret_vals[target]}')
+#             print(f'softmax outpt: {F.softmax(self.fc_dict[target](x), dim=1)}')
+            print(f'prediction: {torch.max(ret_vals[target], dim=1)}\n')
+            return ret_vals[target]
         return np.array(ret_vals)
     
 class MultiTaskLossWrapper(nn.Module):
