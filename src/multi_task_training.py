@@ -132,7 +132,7 @@ class MultiTaskTraining:
                     val_inputs, val_labels = sample['image'].cuda(), torch.LongTensor(sample['labels']).cuda()
                     val_outputs = self.model(val_inputs.to(self.device))
                     val_predicted = np.array([int(torch.max(i, 1)[1].cpu()) for i in val_outputs])
-                    val_losses.append(mtt.loss_func(val_outputs, val_labels).item())
+                    val_losses.append(self.loss_func(val_outputs, val_labels).item())
 
                     val_labels = np.array(val_labels.cpu()).flatten()#.reshape(len(mtt.val_set.dataset.class_dict), -1)
                     corr_vals = np.where(val_labels==val_predicted)
