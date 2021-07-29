@@ -16,7 +16,7 @@ def train():
     transforms.Resize((224, 224)),
     transforms.ToTensor()
 ])
-    full_dataset = Bird_Attribute_Loader(bd, attrs=jsonread['attrs'], verbose=False, species=True, transform=trans, test=jsonread['test'])
+    full_dataset = Bird_Attribute_Loader(bd, attrs=jsonread['attrs'], verbose=False, species=jsonread['species'], family=jsonread['family'], transform=trans, test=jsonread['test'])
     np.random.seed(42)
     train_indices = np.random.choice(a=range(len(full_dataset)), size=int(0.8*len(full_dataset)), replace=False)
     val_indices = list(set(range(len(full_dataset))) - set(train_indices))

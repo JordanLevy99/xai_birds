@@ -38,10 +38,12 @@ class MultiTaskTraining:
         self.train_set = train_set
         self.val_set = val_set
         self.num_tasks = self.train_set.dataset.num_tasks
-        print("NUM TASKS: ", self.num_tasks)
 
         self.batch_size = batch_size
         self.epochs = epochs
+        print("NUM TASKS: ", self.num_tasks)
+        print("NUM EPOCHS: ", self.epochs)
+
         self.cur_epoch = 0
         self.patience = patience
         self.print_freq = print_freq
@@ -72,7 +74,7 @@ class MultiTaskTraining:
 
 
     def train(self):
-        sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_logs.txt", "w")
+        sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_{self.lr}_logs.txt", "w")
         for epoch in range(self.epochs):
             self.cur_epoch = epoch
             running_loss = 0.0
@@ -110,7 +112,7 @@ class MultiTaskTraining:
                         epoch, i, avg_loss))
                     running_loss = 0.0
                     sys.stdout.close()
-                    sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_logs.txt", "a")
+                    sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_{self.lr}_logs.txt", "a")
 
             self.avg_train_losses.append(avg_loss)
             self.model.eval()
@@ -211,7 +213,7 @@ class MultiTaskTraining:
 #                 print('Validation accuracy:',acc)
 #                 print('Average validation loss:',np.mean(val_losses))
                 sys.stdout.close()
-                sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_logs.txt", "a")
+                sys.stdout = open(f"{self.data_dir}logs/{self.task_str}_{self.epochs}_{self.lr}_logs.txt", "a")
 #                 test_str = '_test' if self.test == True else ''
                 # self.avg_val_losses.append(np.mean(val_losses))
             self.model.train()
