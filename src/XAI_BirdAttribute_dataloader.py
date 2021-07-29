@@ -19,7 +19,7 @@ class Bird_Attribute_Loader(Dataset):
     
     change this class or make a new one where you can use key of image directly as an attribute...
     '''
-    def __init__(self, bd:BirdDataset, attrs, verbose, subset=False, species=False, filter_b_w=True, transform=None, random_seed=42, test=False):
+    def __init__(self, bd:BirdDataset, attrs, verbose, subset=False, species=False, family=False, filter_b_w=True, transform=None, random_seed=42, test=False):
 #         XAI_Birds_Dataset.__init__(self, bd, subset=subset, transform=transform, train=train, val=val, random_seed=random_seed)
          # true and val arguments deprecated...s
 #         print(f'num_images: {len(self.images)}')
@@ -39,7 +39,9 @@ class Bird_Attribute_Loader(Dataset):
             self.num_tasks = len(attrs)
         else: self.num_tasks = 0
         self.species = species
-        if self.species: self.num_tasks += 2 # now accounting for family as well
+        self.family = family
+        if self.species: self.num_tasks += 1 # now accounting for family as well
+        if self.family: self.num_tasks += 1
         self.class_dict = self._set_classes_attributes()
         if self.attrs is not None: self.images, self.attr_indices = self._filter_images_by_attributes()
 #         if self.subset: self.images = self._filter_images_by_species()
@@ -62,6 +64,7 @@ class Bird_Attribute_Loader(Dataset):
             labels = [self.class_dict[attr.split('::')[0]][attr] for attr in sorted(attrs)]
             if self.species:
                 labels.append(self.images[idx]['class_label'])
+            if self.family:
                 labels.append(self.bd.fam[self.bd.bird_to_fam[self.bd.species[self.images[idx]['class_label']]]])
             sample = {'image': image, 'labels':labels}
         elif self.species:
@@ -69,6 +72,10 @@ class Bird_Attribute_Loader(Dataset):
             labels.append([self.images[idx]['class_label']])
 #             print(self.bd.species[self.images[idx]['class_label']])
 #             print(self.bd.bird_to_fam[self.bd.species[self.images[idx]['class_label']]])
+            sample = {'image': image, 'labels':labels}
+        
+        elif self.family:
+            labels = []
             labels.append([self.bd.fam[self.bd.bird_to_fam[self.bd.species[self.images[idx]['class_label']]]]])
 
             sample = {'image': image, 'labels':labels}
@@ -93,10 +100,14 @@ class Bird_Attribute_Loader(Dataset):
                 attrs_dict[attribute] = dict(zip(attr_dict.values(), range(len(attr_dict))))
             if self.species: 
                 attrs_dict['species'] = dict(zip(range(len(self.bd.species)), self.bd.species.values()))
+            
+            if self.family:
                 attrs_dict['family'] = {val: key for key, val in self.bd.fam.items()}
         elif self.species: 
             attrs_dict = dict()
             attrs_dict['species'] = dict(zip(range(len(self.bd.species)), self.bd.species.values()))
+        elif self.family:
+            attrs_dict = dict()
             attrs_dict['family'] = {val: key for key, val in self.bd.fam.items()}
         return attrs_dict
     
