@@ -218,7 +218,7 @@ class MultiTaskTraining:
                 # self.avg_val_losses.append(np.mean(val_losses))
             self.model.train()
             if epoch % 10 == 0:
-                fpath = f'{self.data_dir}models/tmp__{self.task_str}_{self.epochs}_epoch_state_dict.pth'
+                fpath = f'{self.data_dir}models/tmp__{self.task_str}_{self.epochs}_epoch_{self.lr}_lr_state_dict.pth'
                 torch.save(self.best_model.state_dict(), fpath)
                 print(f'Model saved at {fpath}')
 
@@ -245,7 +245,7 @@ class MultiTaskTraining:
         plt.ylabel('Loss', fontsize=f_label_size)
         plt.title('Training and Validation Loss', fontsize=f_title_size)
         plt.legend(['Training Loss', 'Validation Loss']);
-        plt.savefig(f'{self.data_dir}figures/{self.task_str}_{self.best_epoch}_epoch_train_val_loss.png', dpi=800)
+        plt.savefig(f'{self.data_dir}figures/{self.task_str}_{self.best_epoch}_epoch_{self.lr}_lr_train_val_loss.png', dpi=800)
 
     def save_model(self):
         # create models and training_objects folders on first run of run.py
